@@ -1,24 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Header } from "./components/Header";
+import { CovidCases } from "./components/CovidCases";
+import { GlobalProvider } from "./components/context/GlobalState";
+import { Resources } from "./components/pages/Resources";
+import { DropdownState } from "./components/DropdownState";
+import { Footer } from "./components/Footer";
+import { Navbar } from "./components/Navbar";
+import { Container } from "react-bootstrap";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalProvider>
+      <Router>
+        <div className="app">
+          <Navbar />
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <div className="flex-box">
+                <Container className="text-center">
+                  <Header />
+                  <CovidCases />
+                </Container>
+              </div>
+            )}
+          ></Route>
+
+          <Route
+            path="/resources"
+            render={(props) => (
+              <>
+                <div className="custom-container">
+                  <DropdownState />
+                </div>
+                <Container fluid className="info">
+                  <br></br>
+                  <div className="card-deck">
+                    <Resources />
+                  </div>
+                </Container>
+              </>
+            )}
+          ></Route>
+          <Footer />
+        </div>
+      </Router>
+    </GlobalProvider>
   );
 }
 
